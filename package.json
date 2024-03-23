@@ -10,7 +10,9 @@
     "lint": "eslint --ext .ts,vue src/ --fix"
   },
   "dependencies": {
-    "vue": "^3.4.21"
+    "@vueuse/core": "^10.9.0",
+    "vue": "^3.4.21",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^7.3.1",
