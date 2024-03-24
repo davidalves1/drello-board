@@ -1,48 +1,51 @@
 <script setup lang="ts">
-  import { ref } from "vue";
-  import draggable from "vuedraggable";
+  import { ref } from 'vue'
+  import draggable from 'vuedraggable'
 
-  import type { Column, Task } from "../types";
+  import type { Column, Task } from '../types'
 
-  import BoardTask from "./BoardTask.vue";
-  import DragHandle from "./DragHandle.vue";
+  import BoardTask from './BoardTask.vue'
+  import DragHandle from './DragHandle.vue'
+  import { useKeyModifier } from '@vueuse/core'
 
   const fakeColumns = [
     {
       id: crypto.randomUUID(),
-      title: "Ready for development",
+      title: 'Ready for development',
       tasks: [
         {
           id: crypto.randomUUID(),
-          title: "Create task component",
+          title: 'Create task component',
           createdAt: new Date(),
         },
         {
           id: crypto.randomUUID(),
-          title: "Create add new task component",
+          title: 'Create add new task component',
           createdAt: new Date(),
         },
       ],
     },
     {
       id: crypto.randomUUID(),
-      title: "In progress",
+      title: 'In progress',
       tasks: [
         {
           id: crypto.randomUUID(),
-          title: "Create board component",
+          title: 'Create board component',
           createdAt: new Date(),
         },
       ],
     },
     {
       id: crypto.randomUUID(),
-      title: "Done",
+      title: 'Done',
       tasks: [],
     },
-  ];
+  ]
 
-  const columns = ref<Column[]>(fakeColumns as Column[]);
+  const columns = ref<Column[]>(fakeColumns as Column[])
+
+  const alt = useKeyModifier('Alt')
 </script>
 <template>
   <div>
@@ -62,16 +65,19 @@
             <DragHandle :width="18" :height="18" />
             {{ column.title }}
           </header>
+          <!-- https://sortablejs.github.io/Sortable/#cloning -->
           <draggable
             v-model="column.tasks"
-            group="tasks"
+            :group="{ name: 'tasks', pull: alt ? 'clone' : true }"
             item-key="id"
             :animation="150"
             handle=".drag-handle"
             class="flex flex-col gap-3"
           >
             <template #item="{ element: task }: { element: Task }">
-              <BoardTask :task="task" class="flex-1" />
+              <div>
+                <BoardTask :task="task" class="flex-1" />
+              </div>
             </template>
           </draggable>
           <footer>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import Board from "./components/Board.vue";
-  import icon from "./assets/drello-board.svg";
+  import Board from './components/Board.vue'
+  import icon from './assets/drello-board.svg'
 </script>
 
 <template>
